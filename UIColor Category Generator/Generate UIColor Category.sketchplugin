@@ -1,0 +1,57 @@
+#import 'sandbox.js'
+
+
+var fileUrl = doc.fileURL();
+var filePath = fileUrl.path();
+
+var targetFolder = filePath.split(doc.displayName())[0];
+log ("Document Path = " + targetFolder);
+
+var mPath = targetFolder + "UIColor+Sketch.m";
+var hPath = targetFolder + "UIColor+Sketch.h";
+
+var text = "Hey! I'm in a text document!";
+
+saveFile(targetFolder, mPath, text);
+saveFile(targetFolder, hPath, text);
+
+var pages = [doc pages];
+
+var swatchPage;
+
+for (var i=0; i < [pages count]; i++)
+{
+  if (pages[i].name() == "Color Swatch")
+  {
+    swatchPage = pages[i];
+    break;
+  }
+}
+
+var swatchLayers = [swatchPage layers];
+
+log ("layers count = " + [swatchLayers count]);
+
+for (var i=0; i < [swatchLayers count]; i++)
+{
+  var layer = [swatchLayers objectAtIndex:i];
+
+  if ([layer isMemberOfClass:[MSShapeGroup class]])
+  {
+    log ("layers name = " + layer.name());
+  }
+}
+
+function saveFile(folder, filename, content)
+{
+    var path = [@"" stringByAppendingString:filename];
+    var str = [@"" stringByAppendingString:content];
+
+    if (in_sandbox()) {
+        sandboxAccess.accessFilePath_withBlock_persistPermission(folder, function(){
+            [str writeToFile:path atomically:true encoding:NSUTF8StringEncoding error:null];
+        }, true)
+    } else {
+        [str writeToFile:path atomically:true encoding:NSUTF8StringEncoding error:null];
+    }
+}
