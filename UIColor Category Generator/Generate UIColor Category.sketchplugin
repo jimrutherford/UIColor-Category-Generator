@@ -1,5 +1,5 @@
 #import 'sandbox.js'
-
+#import 'config.js'
 
 var fileUrl = doc.fileURL();
 var filePath = fileUrl.path();
@@ -9,11 +9,6 @@ log ("Document Path = " + targetFolder);
 
 var mPath = targetFolder + "UIColor+Sketch.m";
 var hPath = targetFolder + "UIColor+Sketch.h";
-
-var text = "Hey! I'm in a text document!";
-
-saveFile(targetFolder, mPath, text);
-saveFile(targetFolder, hPath, text);
 
 var pages = [doc pages];
 
@@ -30,7 +25,10 @@ for (var i=0; i < [pages count]; i++)
 
 var swatchLayers = [swatchPage layers];
 
-log ("layers count = " + [swatchLayers count]);
+var methodSignatures = [];
+var uicolorCodes = [];
+
+var prefix = [doc askForUserInput:"What is your category prefix?" initialValue:"skc_"];
 
 for (var i=0; i < [swatchLayers count]; i++)
 {
@@ -38,8 +36,51 @@ for (var i=0; i < [swatchLayers count]; i++)
 
   if ([layer isMemberOfClass:[MSShapeGroup class]])
   {
-    log ("layers name = " + layer.name());
+    var swatchName = layer.name();
+
+    if (swatchName != "untitled color")
+    {
+      swatchName = makeNiceName(swatchName);
+
+      methodSignatures.push(generateMethodSignature(swatchName, prefix));
+
+
+      uicolorCodes.push(generateFillColor(layer));
+
+    }
   }
+}
+
+var mText = commentHeader + mPrefix;
+var hText = commentHeader + hPrefix;
+
+for (var i=0; i < methodSignatures.length; i++)
+{
+
+  mText += methodSignatures[i];
+  mText += newLine;
+  mText += "{";
+  mText += newLine;
+  mText += "\t" + uicolorCodes[i];
+  mText += newLine;
+  mText += "}";
+  mText += newLine;
+  mText += newLine;
+
+  hText += methodSignatures[i] + ";";
+  hText += newLine;
+  hText += newLine;
+}
+
+mText += end;
+hText += end;
+
+saveFile(targetFolder, mPath, mText);
+saveFile(targetFolder, hPath, hText);
+
+function generateMethodSignature(name, prefix)
+{
+    return "+(UIColor *) " + prefix + name;
 }
 
 function saveFile(folder, filename, content)
@@ -54,4 +95,31 @@ function saveFile(folder, filename, content)
     } else {
         [str writeToFile:path atomically:true encoding:NSUTF8StringEncoding error:null];
     }
+}
+
+function makeNiceName(str)
+{
+    var result;
+
+    // make title case
+    result = str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1);});
+
+    // strip spaces from layer names
+    result = result.replace(/ /g,'');
+
+    // get rid of special characters
+    result = result.replace(/[^\w\s]/gi, '');
+
+    return result;
+}
+
+function generateFillColor(layer)
+{
+  var fill = layer.style().fills().firstObject();
+  var red = fill.color().red().toFixed(3).toString();
+  var green = fill.color().green().toFixed(3).toString();
+  var blue = fill.color().blue().toFixed(3).toString();
+  var alpha = fill.color().alpha().toFixed(3).toString();
+
+  return "return [UIColor colorWithRed:" + red + "f green:" + green + "f blue:" + blue + "f alpha:" + alpha + "f];";
 }
