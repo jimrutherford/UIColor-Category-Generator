@@ -1,0 +1,47 @@
+var swatchPage = doc.addBlankPage();
+
+swatchPage.name = "Color Swatch";
+
+[doc setCurrentPage:doc.pages[0]];
+
+[doc setCurrentPage:swatchPage];
+
+var color = [[MSColor alloc] init];
+[color setRed:0.7];
+[color setGreen:0.7];
+[color setBlue:0.7];
+[color setAlpha:1];
+
+var chipSize = 80;
+var padding = 20;
+
+for (var a = 0; a < 4; a++)
+{
+
+  for (var b = 0; b < 5; b++)
+  {
+
+    var x = b * (chipSize + padding);
+    var y = a * (chipSize + padding);
+
+    var chipLayer = swatchPage.addLayerOfType("rectangle");
+
+    // Set default style.
+    var style = [[chipLayer style] fills];
+    var stylePart=style.addNewStylePart();
+    stylePart.color=color;
+    stylePart.fillType=0;
+
+    chipLayer.setName("untitled color");
+
+    var chipLayerFrame = chipLayer.frame();
+
+    chipLayerFrame.setX(x);
+    chipLayerFrame.setY(y);
+
+    chipLayerFrame.setWidth(chipSize);
+    chipLayerFrame.setHeight(chipSize);
+
+  }
+
+}
