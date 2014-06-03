@@ -43,10 +43,7 @@ for (var i=0; i < [swatchLayers count]; i++)
       swatchName = makeNiceName(swatchName);
 
       methodSignatures.push(generateMethodSignature(swatchName, prefix));
-
-
       uicolorCodes.push(generateFillColor(layer));
-
     }
   }
 }
