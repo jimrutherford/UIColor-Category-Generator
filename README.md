@@ -11,7 +11,7 @@ Download the zip for this project and extract it to a temporary folder.  Copy th
 
 Short Demo
 =============================
-Watch this [short screencast](http://xxx.abc) for full description of how the plugin can be used.
+Watch this [short screencast](https://www.youtube.com/watch?v=W6oT8osPc_A) for full description of how the plugin can be used.
 
 Usage
 =============================
