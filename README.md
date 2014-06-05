@@ -1,7 +1,7 @@
 UIColor Category Generator
 ===========
 
-A SketchApp plugin that generates a UIColor Objective-C Category class from your Sketch documents.  
+A SketchApp plugin that generates a Swift Extension or UIColor or a UIColor Objective-C Category class from your Sketch documents.  
 
 
 Installation
