@@ -1,5 +1,5 @@
 #import 'sandbox.js'
-#import 'objc-config.js'
+#import 'swift-config.js'
 #import 'common.js'
 
 var swatchLayers = getSwatchLayers();
@@ -27,39 +27,31 @@ for (var i=0; i < [swatchLayers count]; i++)
   }
 }
 
-var mText = commentHeader + mPrefix;
-var hText = commentHeader + hPrefix;
+var swiftText = commentHeader + swiftPrefix;
 
 for (var i=0; i < methodSignatures.length; i++)
 {
 
-  mText += methodSignatures[i];
-  mText += newLine;
-  mText += "{";
-  mText += newLine;
-  mText += "\t" + uicolorCodes[i];
-  mText += newLine;
-  mText += "}";
-  mText += newLine;
-  mText += newLine;
-
-  hText += methodSignatures[i] + ";";
-  hText += newLine;
-  hText += newLine;
+  swiftText += methodSignatures[i];
+  swiftText += newLine;
+  swiftText += "{";
+  swiftText += newLine;
+  swiftText += "\t" + uicolorCodes[i];
+  swiftText += newLine;
+  swiftText += "}";
+  swiftText += newLine;
+  swiftText += newLine;
 }
 
-mText += end;
-hText += end;
+swiftText += end;
 
-var mPath = getDocumentPath() + "UIColor+Sketch.m";
-var hPath = getDocumentPath() + "UIColor+Sketch.h";
+var swiftPath = getDocumentPath() + "SketchColors.swift";
 
-saveFile(mPath, mText);
-saveFile(hPath, hText);
+saveFile(swiftPath, swiftText);
 
 function generateMethodSignature(name, prefix)
 {
-    return "+(UIColor *) " + prefix + name;
+    return "class func " + prefix + name + "() -> UIColor!";
 }
 
 function generateFillColor(layer)
@@ -70,5 +62,5 @@ function generateFillColor(layer)
   var blue = fill.color().blue().toFixed(3).toString();
   var alpha = fill.color().alpha().toFixed(3).toString();
 
-  return "return [UIColor colorWithRed:" + red + "f green:" + green + "f blue:" + blue + "f alpha:" + alpha + "f];";
+  return "return UIColor(red: " + red + ", green: " + green + ", blue: " + blue + ", alpha: " + alpha + ")";
 }
