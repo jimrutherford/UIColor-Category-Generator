@@ -7,7 +7,7 @@ var swatchLayers = getSwatchLayers();
 var methodSignatures = [];
 var uicolorCodes = [];
 
-var prefix = [doc askForUserInput:"What is your category prefix?" initialValue:"skc_"];
+var prefix = [doc askForUserInput:"What is your category prefix?" initialValue:"SKC"];
 
 for (var i=0; i < [swatchLayers count]; i++)
 {
@@ -32,13 +32,13 @@ var swiftText = commentHeader + swiftPrefix;
 for (var i=0; i < methodSignatures.length; i++)
 {
 
-  swiftText += methodSignatures[i];
+  swiftText += "\t" + methodSignatures[i];
   swiftText += newLine;
-  swiftText += "{";
+  swiftText += "\t" + "{";
   swiftText += newLine;
-  swiftText += "\t" + uicolorCodes[i];
+  swiftText += "\t\t" + uicolorCodes[i];
   swiftText += newLine;
-  swiftText += "}";
+  swiftText += "\t" + "}";
   swiftText += newLine;
   swiftText += newLine;
 }
