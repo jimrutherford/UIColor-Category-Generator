@@ -70,5 +70,5 @@ function generateFillColor(layer)
   var blue = fill.color().blue().toFixed(3).toString();
   var alpha = fill.color().alpha().toFixed(3).toString();
 
-  return "return [UIColor colorWithRed:" + red + "f green:" + green + "f blue:" + blue + "f alpha:" + alpha + "f];";
+  return "return [UIColor colorWithRed:" + red + " green:" + green + " blue:" + blue + " alpha:" + alpha + "];";
 }
