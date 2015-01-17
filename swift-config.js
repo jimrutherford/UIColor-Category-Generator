@@ -16,6 +16,7 @@ commentHeader += newLine;
 commentHeader += newLine;
 
 swiftPrefix  = "import Foundation";
+swiftPrefix += newLine;
 swiftPrefix += "import UIKit";
 swiftPrefix += newLine;
 swiftPrefix += newLine;
