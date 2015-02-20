@@ -24,24 +24,16 @@ for (var a = 0; a < 4; a++)
     var x = b * (chipSize + padding);
     var y = a * (chipSize + padding);
 
-    var chipLayer = swatchPage.addLayerOfType("rectangle");
-
-    // Set default style.
-    var style = [[chipLayer style] fills];
-    var stylePart=style.addNewStylePart();
-    stylePart.color=color;
-    stylePart.fillType=0;
-
-    chipLayer.setName("untitled color");
-
-    var chipLayerFrame = chipLayer.frame();
-
-    chipLayerFrame.setX(x);
-    chipLayerFrame.setY(y);
-
-    chipLayerFrame.setWidth(chipSize);
-    chipLayerFrame.setHeight(chipSize);
-
+    var colorBlock = swatchPage.addLayerOfType("rectangle")
+        colorBlock = colorBlock.embedInShapeGroup()
+        colorBlock.frame().x = x
+        colorBlock.frame().y = y
+        colorBlock.frame().width = chipSize
+        colorBlock.frame().height = chipSize
+        colorBlock.setName("untitled color")
+        var colorBlockFill = colorBlock.style().fills().addNewStylePart()
+        colorBlockFill.color = color
+        
   }
 
 }
